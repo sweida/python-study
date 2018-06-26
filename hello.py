@@ -118,16 +118,33 @@
 # nows = now + timedelta(days=3, hours=10)
 # print(nows.strftime('%Y-%m-%d %H:%M:%S'))
 
-# deque list的插入和删除
-from collections import deque
-q = deque(['a', 'b', 'c'])
-q.append('x')
-q.appendleft('yy')
-print(q)
+# # deque list的插入和删除
+# from collections import deque
+# q = deque(['a', 'b', 'c'])
+# q.append('x')
+# q.appendleft('yy')
+# print(q)
 
+# urllib的request模块抓取url
+from urllib import request
 
+# with request.urlopen('https://api.douban.com/v2/book/2129650') as f:
+#     data = f.read()
+#     print('Status', f.status, f.reason)
+#     for k, v in f.getheaders():
+#         print('%s: %s' % (k, v))
+#     print('Data:', data.decode('utf-8'))
 
-
+# 模拟iphone6请求 把html写入inde.html
+req = request.Request('http://www.douban.com')
+req.add_header('User-Agent', 'Mozilla/6.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/8.0 Mobile/10A5376e Safari/8536.25')
+with request.urlopen(req) as f:
+    print('Status', f.status, f.reason)
+    # for k, v in f.getheaders():
+        # print('%s: %s' % (k, v))
+    # print('Data:', f.read().decode('utf-8'))
+    with open('./index.html', 'w') as g:
+        g.write(f.read().decode('utf-8'))
 
 
 
