@@ -1,0 +1,32 @@
+body, html{
+  margin: 0;
+  padding: 0;
+}
+li{
+  list-style: none;
+}
+a{
+  text-decoration: none;
+}
+header{
+  padding: 0 10%;
+  box-sizing: border-box;
+  margin: auto;
+  background: #ddd;
+  height: 50px;
+  line-height: 50px;
+}
+header li{
+  float: left;
+ width: 100px; 
+}
+header .right{
+  float: right;
+}
+header .right li{
+  width: 60px;
+}
+footer{
+  text-align: center;
+  font-size: 16px;
+}
