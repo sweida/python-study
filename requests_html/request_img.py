@@ -1,6 +1,6 @@
 from requests_html import HTMLSession
 import requests
-
+import os
 session = HTMLSession()
 
 
@@ -8,7 +8,10 @@ session = HTMLSession()
 url = "http://www.win4000.com/wallpaper_2285_0_10_1.html"
 r = session.get(url)
 
-# 手动新建bg文件夹，保存图片到bg/目录
+# 新建bg文件夹
+if not os.path.exists('bg'):
+    os.mkdir('bg')
+
 def save_image(url, title):
     img_response = requests.get(url)
     with open('./bg/'+title+'.jpg', 'wb') as file:

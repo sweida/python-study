@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>draggable</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+  <script src="main.js"></script>
+  <style>
+  .box{
+    width: 150px;
+    height: 150px;
+    background: yellow;
+    position: absolute;
+    top: 100px;
+    left: 50px;
+  }
+  .container{
+    width: 300px;
+    height: 300px;
+    background: green;
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    margin-left: -150px;
+  }
+  </style>
+</head>
+<body>
+  <div class="box" draggable="true"></div>
+  <div class="container"></div>
+  <script>
+    var box = document.querySelector('.box')
+    var container = document.querySelector('.container')
+    box.addEventListener('drag', function() {
+      console.log(1);
+    })
+    box.addEventListener('dragleave', function() {
+      console.log(2);
+    })
+
+    // 拖拽开始
+    box.addEventListener('dragstart', function() {
+      this.style.backgroundColor = 'pink'
+      console.log(3);
+    })
+    // 拖拽结束
+    box.addEventListener('dragend', function(ev) {
+      this.style.backgroundColor = ''
+      console.log(ev);
+    })
+    // 进入到目标
+    container.addEventListener('dragenter', function() {
+      this.style.backgroundColor = 'pink'
+    })
+    // 在目标元素上移动
+    container.addEventListener('dragover', function(ev) {
+      this.style.backgroundColor = 'yellow';
+      ev.preventDefault()
+    })
+    container.addEventListener('drop', function(ev) {
+      this.style.backgroundColor = 'black';
+      console.log(ev)
+      ev.preventDefault()
+    })
+  </script>
+</body>
+</html>
