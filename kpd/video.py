@@ -25,6 +25,10 @@ for abox in items_a:
         video_r = session.get(url + a_url)
         # 图片地址
         title = video_r.html.find('div.video-player-hd > h1', first=True)
+        # 创建时间
+        creatDate = abox.find('.fa-calendar-check-o', first=True)
+        # 视频时长
+        longTime = abox.find('.fa-clock-o', first=True)
         # 视频地址
         iframe = video_r.html.find('iframe', first=True)
         iframe_url = iframe.attrs['src']
@@ -32,11 +36,21 @@ for abox in items_a:
         video_text = re.findall(r'https.*?\]', video_r.text)
         video_url = video_text[0][0: -2]
         # json
-        jsondata = {'id':a_url[-10:-5] ,'url':img_url, 'title':title.text, 'video':video_url}
+        jsondata = {
+            'id':a_url[-10:-5] ,
+            'image':img_url, 
+            'creatDate': creatDate.text,
+            'longTime': longTime.text,
+            'title':title.text, 
+            'video':video_url
+        }
         # jsondata = {'id':a_url[-10:-5] ,'url':img_url, 'title':title.text}
-        print(jsondata)
-        with open('whmm.json', 'wb') as file:
-            file.write(jsondata)
+print(jsondata)
+with open('./whmm.js', 'w') as f:
+    json.dump(jsondata, f, ensure_ascii=False, sort_keys=True, indent=4)
+    print('输入成功')
+        # with open('whmm.json', 'w') as file:
+        #     file.write(jsondata)
         
 
 

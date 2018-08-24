@@ -9,8 +9,10 @@ url = "https://www.sweida.me"
 #     os.mkdir('html')
 
 r = session.get(url)
-r.encoding='utf-8'  # 解决中文乱码问题
-# print(r.text)
-# 获取的网页的内容存储到本地
-with open('test.html','wb') as f:
-    f.write(r.content)
+# r.encoding='utf-8'  # 解决中文乱码问题
+# # print(r.text)
+# # 获取的网页的内容存储到本地
+# with open('test.html','wb') as f:
+#     f.write(r.content)
+rrr = r.html.title
+print(rrr)
