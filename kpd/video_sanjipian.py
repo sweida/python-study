@@ -7,9 +7,9 @@ import re
 
 
 
-url = "https://www.41kpd.com"
-whmm = url + '/whmm'
-r = session.get(whmm)
+url = "https://www.45kpd.com"
+porn = url + '/sanjipian/index_2.html'
+r = session.get(porn)
 
 # # 新建data文件夹
 # if not os.path.exists('data'):
@@ -18,7 +18,7 @@ r = session.get(whmm)
 items_a = r.html.find('ul.panel-list > li > a')
 for abox in items_a:
     a_url = abox.attrs['href']
-    if '/whmm' in a_url:
+    if '/sanjipian' in a_url:
         img_url = url + abox.find('img', first=True).attrs['src']
         # print(img_url)
         # 视频详情页
@@ -48,7 +48,7 @@ for abox in items_a:
         print(jsondata)
         # with open('./whmm2.js', 'w') as f:
         #     json.dump(jsondata, f, ensure_ascii=False, sort_keys=True, indent=4)
-print('输入成功')
+print('三级片-输入成功')
         # with open('whmm.json', 'w') as file:
         #     file.write(jsondata)
         
