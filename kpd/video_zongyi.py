@@ -7,9 +7,9 @@ import re
 
 
 
-url = "https://www.45kpd.com"
-porn = url + '/sanjipian/index_2.html'
-r = session.get(porn)
+url = "https://www.43kpd.com"
+zongyi = url + '/zongyi/index_9.html'
+r = session.get(zongyi)
 sendData = []
 # # 新建data文件夹
 # if not os.path.exists('data'):
@@ -18,7 +18,7 @@ sendData = []
 items_a = r.html.find('ul.panel-list > li > a')
 for abox in items_a:
     a_url = abox.attrs['href']
-    if '/sanjipian' in a_url:
+    if '/zongyi' in a_url:
         if not abox.search('VIP视频'):
             img_url = url + abox.find('img', first=True).attrs['src']
             # print(img_url)
@@ -39,19 +39,19 @@ for abox in items_a:
             # json
             jsondata = {
                 'id':a_url[-10:-5] ,
-                'image':abox.find('img', first=True).attrs['src'], 
+                'image':abox.find('img', first=True).attrs['src'],
                 'creatDate': creatDate.text,
                 'longTime': longTime.text,
-                'title':title.text, 
+                'title':title.text,
                 'video':video_url
             }
 
             sendData.append(jsondata)
             print(jsondata)
 
-with open('data/sanji.js', 'w') as f:
+with open('data/zongyi.js', 'w') as f:
     json.dump(sendData, f, ensure_ascii=False, sort_keys=True, indent=2)
-print('三级片-输入成功')
+print('两性综艺输入成功')
 
 
 
