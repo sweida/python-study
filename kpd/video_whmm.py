@@ -9,11 +9,11 @@ import time
 # 获取今天年月日
 nowdate = time.localtime(time.time())  # 获得指定格式的等地时间
 today = time.strftime('%Y-%m-%d', nowdate)  # 获得指定格式的等地时间
-today = '2018-09-04'  # 获得指定格式的等地时间
-print(today)
+
 
 url = "https://www.45kpd.com"
-whmm = url + '/whmm'
+route = '/whmm'
+whmm = url + route
 r = session.get(whmm)
 sendData = []
 # # 新建data文件夹
@@ -26,7 +26,7 @@ for abox in items_a:
     a_url = abox.attrs['href']
     # 创建时间
     creatDate = abox.find('.fa-calendar-check-o', first=True).text
-    if '/whmm' in a_url and creatDate == today:
+    if route in a_url and creatDate == today:
         if not abox.search('VIP视频'):
             img_url = url + abox.find('img', first=True).attrs['src']
             # print(img_url)
@@ -54,18 +54,20 @@ for abox in items_a:
             sendData.append(jsondata)
             print(jsondata)
 
-with open('data/whmm.js', 'w') as f:
-    json.dump(sendData, f, ensure_ascii=False, sort_keys=True, indent=2)
-print(today,'网红主播输入成功')
-        
 
+if sendData == []:
+    print('网红主播今天无更新')
+else:
+    with open('data/zongyi.js', 'w') as f:
+        json.dump(sendData, f, ensure_ascii=False, sort_keys=True, indent=2)
+    print(today, '网红主播输入成功')
 
 
 # # 爬取一整页
 # items_a = r.html.find('ul.panel-list > li > a')
 # for abox in items_a:
 #     a_url = abox.attrs['href']
-#     if '/whmm' in a_url:
+#     if route in a_url:
 #         if not abox.search('VIP视频'):
 #             img_url = url + abox.find('img', first=True).attrs['src']
 #             # print(img_url)
