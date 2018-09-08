@@ -5,7 +5,9 @@ import time
 nowdate = time.localtime(time.time())  # 获得指定格式的等地时间
 today = time.strftime('%Y-%m-%d', nowdate)  # 获得指定格式的等地时间
 # 新建今天的文件夹
-os.mkdir('data/'+today)
+if not os.path.exists('data/'+today):
+    os.mkdir('data/'+today)
+print(today)
 
 os.system("python ./video_whmm.py")
 os.system("python ./video_guoc.py")

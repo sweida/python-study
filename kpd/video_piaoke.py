@@ -5,6 +5,7 @@ session = HTMLSession()
 import json
 import re
 import time
+import io
 
 # 获取今天年月日
 nowdate = time.localtime(time.time())  # 获得指定格式的等地时间
@@ -58,7 +59,7 @@ for abox in items_a:
 if sendData == []:
     print('嫖客日记今天无更新')
 else:
-    with open('data/zongyi.js', 'w') as f:
+    with io.open('data/'+today + '/piaoke.js', 'w', encoding="utf-8") as f:
         json.dump(sendData, f, ensure_ascii=False, sort_keys=True, indent=2)
     print(today, '嫖客日记输入成功')
 
