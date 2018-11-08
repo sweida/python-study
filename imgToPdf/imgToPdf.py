@@ -18,6 +18,6 @@ def imgtopdf(input_paths, outputpath):
     c.save()
  
 # 调用demo:
-imgtopdf("41.jpg", "one.pdf")
+imgtopdf("test.jpg", "test.pdf")
 print('转换成功！')
 
