@@ -9,15 +9,27 @@ from reportlab.lib.pagesizes import portrait
 from reportlab.pdfgen import canvas
 from PIL import Image
  
- 
-def imgtopdf(input_paths, outputpath):
-    (maxw, maxh) = Image.open(input_paths).size
-    c = canvas.Canvas(outputpath, pagesize=portrait((maxw, maxh)))
-    c.drawImage(input_paths, 0, 0, maxw, maxh)
+# 如果有输指定文件则转换参数里的图片，否则转换test.jpg文件
+if len(sys.argv) > 1:
+    img = sys.argv[1]
+    filename = img.split('.')[0]
+    f_jpg = filename+'.jpg'
+    f_pdf = filename+'.pdf'
+    print(f_jpg)
+
+else:
+    img = 'test.jpg'
+    f_pdf = 'test.pdf'
+
+
+def imgtopdf():
+    (maxw, maxh) = Image.open(img).size
+    c = canvas.Canvas(f_pdf, pagesize=(maxw, maxh))
+    c.drawImage(img, 0, 0, maxw, maxh)
     c.showPage()
     c.save()
  
-# 调用demo:
-imgtopdf("test.jpg", "test.pdf")
+
+imgtopdf()
 print('转换成功！')
 
