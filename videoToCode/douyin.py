@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-#coding:utf-8
+
 import argparse
 import os
 import cv2
@@ -7,29 +7,8 @@ import subprocess
 from cv2 import VideoWriter, VideoWriter_fourcc, imread, resize
 from PIL import Image, ImageFont, ImageDraw
 
-# 命令行输入参数处理
-# aparser = argparse.ArgumentParser()
-# aparser.add_argument('file')
-# aparser.add_argument('-o','--output')
-# aparser.add_argument('-f','--fps',type = float, default = 24)#帧
-# aparser.add_argument('-s','--save',type = bool, nargs='?', default = False, const = True)
-# 是否保留Cache文件，默认不保存
+ascii_char = list("$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:oa+>!:+. ")
 
-# 获取参数
-# args = parser.parse_args()
-# INPUT = args.file
-# OUTPUT = args.output
-# SAVE = args.save
-# FPS = args.fps
-# 像素对应ascii码
-
-
-ascii_char = list(
-    "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:oa+>!:+. ")
-
-
-# ascii_char = list("MNHQ$OC67+>!:-. ")
-# ascii_char = list("MNHQ$OC67)oa+>!:+. ")
 
 # 将像素转换为ascii码
 def get_char(r, g, b, alpha=256):
@@ -104,6 +83,7 @@ def video2txt_jpg(file_name):
         txt2image(str(c) + '.jpg')  # 同时转换为ascii图
         r, frame = vc.read()
         c += 1
+    # 切换工作路径
     os.chdir('..')
     return vc
 
@@ -126,6 +106,20 @@ def jpg2video(outfile_name, fps):
     vw.release()
 
 
+# 调用ffmpeg获取mp3音频文件
+def video2mp3(file_name):
+    outfile_name = file_name.split('.')[0] + '.mp3'
+    subprocess.call('ffmpeg -i ' + file_name +
+                    ' -f mp3 ' + outfile_name, shell=True)
+
+
+# 合成音频和视频文件
+def video_add_mp3(file_name, mp3_file):
+    outfile_name = file_name.split('.')[0] + '_txt.mp4'
+    subprocess.call('ffmpeg -i ' + file_name + ' -i ' + mp3_file +
+                    ' -strict -2 -f mp4 ' + outfile_name, shell=True)
+
+
 # 递归删除目录
 def remove_dir(path):
     if os.path.exists(path):
@@ -143,37 +137,35 @@ def remove_dir(path):
         return
 
 
-# 调用ffmpeg获取mp3音频文件
-def video2mp3(file_name):
-    outfile_name = file_name.split('.')[0] + '.mp3'
-    subprocess.call('ffmpeg -i ' + file_name +
-                    ' -f mp3 ' + outfile_name, shell=True)
-
-
-# 合成音频和视频文件
-def video_add_mp3(file_name, mp3_file):
-    outfile_name = file_name.split('.')[0] + '-txt.mp4'
-    subprocess.call('ffmpeg -i ' + file_name + ' -i ' + mp3_file +
-                    ' -strict -2 -f mp4 ' + outfile_name, shell=True)
-
-
 if __name__ == '__main__':
-    INPUT = r"E:\Python\python-study\001.mp4"
-    OUTPUT = r"E:\Python\python-study\001_1.mp4"
-    SAVE = r"E:\Python\python-study\\001_2"
-    FPS = "24"
+    INPUT = r"001.mp4"
+
+    if (os.path.exists('001_txt.mp4')):
+        os.remove('001_txt.mp4')
+        print('删除已存在的同名文件')
+
+    OUTPUT = r"001_txt.mp4"
+    SAVE = r"001_txt"
     vc = video2txt_jpg(INPUT)
+    print('图片切分成功')
+
+    FPS = "29.86725663716814"
     FPS = vc.get(cv2.CAP_PROP_FPS)  # 获取帧率
     print(FPS)
 
     vc.release()
 
     jpg2video(INPUT.split('.')[0], FPS)
-    print(INPUT, INPUT.split('.')[0] + '.mp3')
-    video2mp3(INPUT)
-    video_add_mp3(INPUT.split('.')[0] + '.avi', INPUT.split('.')[0] + '.mp3')
+    print('图片合成视频成功')
 
-    if (not SAVE):
+    video2mp3(INPUT)
+    print('提取音频成功')
+
+    video_add_mp3(INPUT.split('.')[0] + '.avi', INPUT.split('.')[0] + '.mp3')
+    print('音频和视频合并成功')
+
+    # 如果成功就删除过程中生成的文件
+    if (OUTPUT):
         remove_dir("Cache")
         os.remove(INPUT.split('.')[0] + '.mp3')
         os.remove(INPUT.split('.')[0] + '.avi')
