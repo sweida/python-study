@@ -9,6 +9,7 @@ import os
 
 
 def rea(pdf_name):
+    # 当前文件
     file_list = os.listdir('.')
     pic_name = []
     im_list = []

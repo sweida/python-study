@@ -1,1 +1,1 @@
-python imgsToPdf.py
+python imgsToPdfA4.py
