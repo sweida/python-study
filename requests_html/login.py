@@ -3,6 +3,7 @@
 from requests_html import HTMLSession
 import requests
 import os
+import config
 session = HTMLSession()
 
 
@@ -13,8 +14,8 @@ headers = {
 def login():
     url = 'http://119.29.27.100/apis/login'
     data = {
-        'username':'九歌',
-        'password':'ying5201314'
+        'username': config.username,
+        'password': config.password
     }
     response = session.post(url, data=data, headers=headers)
 
