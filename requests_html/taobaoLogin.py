@@ -1,13 +1,11 @@
 import os
 import requests
-from requests_html import HTMLSession
-
+session = requests.session()
 
 # https://log.mmstat.com/member.2.1.2?ok = 1
 # https://log.mmstat.com/member.2.1.4
 # 保持登录状态
 
-session = HTMLSession()
 
 headers = {
     'Host': 'login.taobao.com',

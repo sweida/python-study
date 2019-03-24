@@ -1,7 +1,6 @@
-from requests_html import HTMLSession
 import requests
 import os
-session = HTMLSession()
+session = requests.session()
 
 
 # 背景图片地址
