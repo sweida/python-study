@@ -1,3 +1,5 @@
+# coding=utf-8
+
 # 保持登录状态
 
 import requests
@@ -19,7 +21,7 @@ for line in cookie_str.split(';'):
 def comment():
     url = 'http://119.29.27.100/apis/message/add'
     data = {
-        'content': '再试一条cookie请求',
+        'content': '再试一条cookie留言，不知道cookies过期没',
         'ykname': ''
     }
     response = requests.post(url, data=data, headers=headers, cookies=cookies)
